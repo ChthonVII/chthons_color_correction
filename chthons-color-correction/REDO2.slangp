@@ -1,0 +1,122 @@
+shaders = "11"
+
+shader0 = shaders/trilinearLUT-gamma.slang
+filter_linear0 = false
+float_framebuffer0 = true
+scale_type0 = "source"
+scale0 = "1.000000"
+
+shader1 = "shaders/bicubic-sometimes.slang"
+filter_linear1 = false
+wrap_mode1 = clamp_to_edge
+float_framebuffer1 = true
+scale_type_x1 = "absolute"
+scale_x1 = "256.000000"
+scale_type_y1 = "absolute"
+scale_y1 = "224.000000"
+alias1 = XbrSource
+
+shader2 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass0.slang"
+filter_linear2 = false
+wrap_mode2 = clamp_to_edge
+float_framebuffer2 = true
+scale_type2 = "source"
+scale2 = "1.000000"
+
+shader3 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass1.slang"
+filter_linear3 = false
+wrap_mode3 = clamp_to_edge
+float_framebuffer3 = true
+scale_type3 = "source"
+scale3 = "2.000000"
+
+shader4 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass2.slang"
+filter_linear4 = false
+wrap_mode4 = clamp_to_edge
+float_framebuffer4 = true
+scale_type4 = "source"
+scale4 = "1.000000"
+
+shader5 = "../edge-smoothing/xbr/shaders/super-xbr/custom-jinc2-sharper.slang"
+filter_linear5 = false
+wrap_mode5 = clamp_to_edge
+float_framebuffer5 = true
+scale_type_x5 = "viewport"
+scale_x5 = "0.750000"
+scale_type_y5 = "absolute"
+scale_y5 = "2240.000000"
+
+# Apply scanlines
+shader6 = "shaders/scanline-rework-erfv.slang"
+filter_linear6 = "false"
+wrap_mode6 = "clamp_to_edge"
+mipmap_input6 = "false"
+float_framebuffer6 = "true"
+scale_type6 = "source"
+scale6 = "1.000000"
+
+# Downscale Y to fit viewport, achieving 4:3 aspect ratio.
+shader7 =  "../interpolation/shaders/spline36-y.slang"
+filter_linear7 = "true"
+wrap_mode7 = "clamp_to_edge"
+mipmap_input7 = "false"
+float_framebuffer7 = "true"
+scale_type_x7 = "source"
+scale_x7 = "1.000000"
+scale_type_y7 = "viewport"
+scale_y7 = "1.000000"
+
+# Apply aperature grille effect
+shader8 =   "shaders/aapg-rework2.slang"
+filter_linear8 =   "false"
+float_framebuffer8 =   "true"
+scale_type8 =   "source"
+scale8 =   "1.000000"
+
+# Letterbox the result
+# This can be replaced with a "fancy borders" shader
+shader9 = shaders/letterbox.slang
+scale_type9 = viewport
+scale9 = "1.000000"
+filter_linear9 = "false"
+float_framebuffer9 = "true"
+
+shader10 = shaders/delinearizeSRGB.slang
+filter_linear10 = false
+
+textures = "SamplerLUT"
+#### Japan ####
+
+# Used in Sony Trinitron ~1993 - ~1995
+#SamplerLUT = shaders/CXA1464AS_default.png
+
+# Used in Sony Trinitron ~1996
+#SamplerLUT = shaders/CXA1870S_JP_default.png
+
+# probably used in Sony Trinitron probably around 1997
+# (probably similar to CXA2061S, which was definitely used in Trinitron ~1997 - ~1999, but its data sheet is lacking info needed for LUT creation)
+#SamplerLUT = shaders/CXA2060BS_JP_default.png
+
+# Used in Sony Trinitron ~1997
+#SamplerLUT = shaders/CXA2025AS_JP_default.png
+
+#### US ####
+
+# Used in Sony Trinitron ~1993 - ~1995
+#SamplerLUT = shaders/CXA1465AS_default.png
+
+# Used in Sony Trinitron ~1996
+#SamplerLUT = shaders/CXA1870S_US_default.png
+
+# probably used in Sony Trinitron probably around 1997
+# (probably similar to CXA2061S, which was definitely used in Trinitron ~1997 - ~1999, but its data sheet is lacking info needed for LUT creation)
+#SamplerLUT = shaders/CXA2060BS_US_default.png
+
+# Used in Sony Trinitron ~1997
+SamplerLUT = shaders/CXA2025AS_US_default.png
+
+#### Europe ####
+# (PAL/EBU had no color correction, so this LUT just does the gamma and gamut conversion for phosphors.)
+#SamplerLUT = shaders/EBU_default.png
+
+SamplerLUT_linear = false

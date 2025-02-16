@@ -1,0 +1,34 @@
+shaders = "2"
+
+# since bsnes's mode7 supersampling doesn't work at 1x, use a higher scale factor with supersampling in the core options, then downscale to accomplish supersampling at 1x
+# (bsnes-hd's supersampling works, but it has other bugs, and undesirable overscan behavior)
+# make sure the dimensions here match what the core is outputting at 1x.
+shader0 = ../stock.slang
+scale_type0 = viewport
+scale0 = "1.000000"
+
+# Letterbox the result
+# This can be replaced with a "fancy borders" shader
+shader1 = shaders/letterbox.slang
+scale_type1 = source
+scale1 = "1.000000"
+filter_linear1 = "false"
+float_framebuffer1 = "true"
+
+
+
+PHOSPHOR_LAYOUT = "4.000000"
+
+
+MODE = "1.000000"
+JINC2_SINC = "0.920000"
+JINC2_AR_STRENGTH = "0.500000"
+
+textures = "SamplerLUT"
+# Japan
+SamplerLUT = shaders/CXA1464AS_default.png
+#SamplerLUT = shaders/CXA1464AS_RGB2sRGBnew.png
+# US
+#SamplerLUT = shaders/CXA1465AS_default.png
+#SamplerLUT = shaders/CXA1465AS_RGB2sRGBnew.png
+SamplerLUT_linear = false

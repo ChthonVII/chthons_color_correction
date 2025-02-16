@@ -1,0 +1,29 @@
+great JP
+./gamutthingy --lutgen true -o newtest11.png -s P22_trinitron_mixandmatch --sw 9300K8mpcd -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod CXA2060BS_JP --crtyuvconst 3digit
+
+great US
+./gamutthingy --lutgen true -o newtest11a.png -s P22_trinitron_mixandmatch --sw 7100K -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod CXA2060BS_US --crtyuvconst 3digit
+
+euro yellow is too green
+./gamutthingy --lutgen true -o newtest11e.png -s P22_trinitron_mixandmatch --sw 6900K -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod dummy --crtyuvconst 3digit
+
+
+
+likely trio
+./gamutthingy -s P22_trinitron --sw 9300K8mpcd --crtemu front --crtdemod CXA1464AS --lutgen true -o ntscj_p22trinitron_9300k8mpcd_cxa1464as.png
+
+
+
+
+./gamutthingy -s P22_trinitron --sw 9300K8mpcd --crtemu front --crtdemod CXA1465AS --lutgen true -o knobtest6a.png --crtclamplow 0.0 --crtclamphigh 1.0
+
+./gamutthingy -s P22_trinitron --sw 9300K8mpcd --crtemu front --crtdemod CXA1464AS --lutgen true -o knobtest4.png --crtclamplow 0.0 --crtclamphigh 1.0 --chk -2.0
+
+probably ideal 1464
+./gamutthingy -s P22_trinitron --sw 9300K8mpcd --crtemu front --crtdemod CXA1464AS --lutgen true -o knobtest3.png --crtclamplow 0.0 --crtclamphigh 1.0
+
+
+ ./gamutthingy -s P22_trinitron --sw 9300K8mpcd --crtemu front --crtdemod CXA1465AS --lutgen true -o knobtest5a.png --chk -5.0 --crtdemodrenorm all --crtclamphigh 1.0
+
+decent 1465
+  ./gamutthingy -s P22_trinitron --sw 7100K --crtemu front --crtdemod CXA1465AS --lutgen true -o knobtest20a.png --crtclamphigh 1.0 --crtclamplow 0.0 --chk -2.0

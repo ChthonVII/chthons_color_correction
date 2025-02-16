@@ -1,0 +1,155 @@
+shaders = "12"
+feedback_pass = "2"
+
+#shader0 = ../stock.slang
+shader0 = ../interpolation/shaders/bicubic.slang
+scale_type_x0 = absolute
+scale_x0 = "256.000000"
+scale_type_y0 = absolute
+scale_y0 = "224.000000"
+filter_linear0 = true
+
+shader1 = shaders/trilinearLUT.slang
+scale_type1 = source
+scale1 = "1.000000"
+filter_linear1 = false
+float_framebuffer1 = true
+wrap_mode1 = "clamp_to_border"
+mipmap_input1 = "false"
+
+shader2 = shaders/linearizeSRGB.slang
+scale_type2 = source
+scale2 = "1.000000"
+float_framebuffer2 = true
+filter_linear2 = false
+alias2 = XbrSource
+
+#shader3 = "shaders/crt-reverse-aa-pass0-mod.slang"
+#filter_linear3 =  "false"
+#wrap_mode3 =  "clamp_to_edge"
+#mipmap_input3 =  "false"
+#alias3 =  ""
+#float_framebuffer3 =  "true"
+#scale_type_x3 =  "source"
+#scale_x3 =  "2.000000"
+#scale_type_y3 =  "source"
+#scale_y3 =  "2.000000"
+
+#shader4 =  "../interpolation/shaders/bicubic-x.slang"
+#filter_linear4 =  "false"
+#wrap_mode4 =  "clamp_to_border"
+#mipmap_input4 =  "false"
+#alias4 =  ""
+#float_framebuffer4 =  "true"
+#scale_type_x4 =  "viewport"
+#scale_x4 =  "1.000000"
+#scale_type_y4 =  "source"
+#scale_y4 =  "1.000000"
+
+shader3 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass0.slang"
+filter_linear3 = false
+wrap_mode3 = clamp_to_edge
+#srgb_framebuffer3 = true
+float_framebuffer3 =  "true"
+scale_type3 = "source"
+scale3 = "1.000000"
+
+shader4 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass1.slang"
+filter_linear4 = false
+wrap_mode4 = clamp_to_edge
+#srgb_framebuffer4 = true
+float_framebuffer4 =  "true"
+scale_type4 = "source"
+scale4 = "2.000000"
+
+shader5 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass2.slang"
+filter_linear5 = false
+wrap_mode5 = clamp_to_edge
+#srgb_framebuffer5 = true
+float_framebuffer5 =  "true"
+scale_type5 = "source"
+scale5 = "1.000000"
+
+shader6 = "../edge-smoothing/xbr/shaders/super-xbr/custom-jinc2-sharper.slang"
+filter_linear6 = false
+wrap_mode6 = clamp_to_edge
+#srgb_framebuffer6 = true
+float_framebuffer6 =  "true"
+scale_type6 = "viewport"
+scale6 = "1.000000"
+
+
+#shader7 = ../sharpen/shaders/rcas.slang
+#filter_linear7 = false
+#scale_type7 = source
+#scale7 = 1.0
+#float_framebuffer7 =  "true"
+#alias7 = UnsquashedSource
+
+shader7 = ../deblur/shaders/deblur.slang
+filter_linear7 = true
+scale_type7 = viewport
+scale7 = 1.0
+float_framebuffer7 =  "true"
+alias7 = UnsquashedSource
+
+shader8 =  "../interpolation/shaders/bicubic-y.slang"
+filter_linear8 =  "false"
+wrap_mode8 =  "clamp_to_border"
+mipmap_input8 =  "false"
+float_framebuffer8 =  "true"
+scale_type_x8 =  "source"
+scale_x8 =  "1.000000"
+scale_type_y8 =  "absolute"
+scale_y8 =  "224.000000"
+alias8 = SquashedLongSource
+
+shader9 =  "../interpolation/shaders/bicubic-x.slang"
+filter_linear9 =  "false"
+wrap_mode9 =  "clamp_to_border"
+mipmap_input9 =  "false"
+alias9 =  ""
+float_framebuffer9 =  "true"
+scale_type_x9 =  "source"
+scale_x9 =  "0.25"
+scale_type_y9 =  "source"
+scale_y9 =  "1.000000"
+
+#shader9 =   "shaders/crt-hyllian-pass1.slang"
+shader10 =   "shaders/aapg-fakescanlines.slang"
+filter_linear10 =   "false"
+wrap_mode10 =   "clamp_to_edge"
+mipmap_input10 =   "false"
+alias10 =   ""
+float_framebuffer10 =   "true"
+scale_type_x10 =   "viewport"
+scale_x10 =   "1.000000"
+scale_type_y10 =   "viewport"
+scale_y10 =   "1.000000"
+
+shader11 = shaders/delinearizeSRGB.slang
+scale_type11 = source
+scale11 = "1.000000"
+
+BEAM_MIN_WIDTH = "0.860000"
+BEAM_MAX_WIDTH = "1.000000"
+SCANLINES_STRENGTH = "0.500000"
+BRIGHTBOOST = "1.100000"
+PHOSPHOR_LAYOUT = "4.000000"
+SCANLINES_SHAPE = "0.000000"
+MASK_DARK_STRENGTH = "0.400000"
+MASK_LIGHT_STRENGTH = "0.400000"
+SCANLINES_HIRES = "1.000000"
+
+MODE = "1.000000"
+JINC2_SINC = "0.920000"
+JINC2_AR_STRENGTH = "0.500000"
+
+textures = "SamplerLUT"
+# Japan
+SamplerLUT = shaders/CXA1464AS_default.png
+#SamplerLUT = shaders/CXA1464AS_RGB2sRGBnew.png
+# US
+#SamplerLUT = shaders/CXA1465AS_default.png
+#SamplerLUT = shaders/CXA1465AS_RGB2sRGBnew.png
+SamplerLUT_linear = false

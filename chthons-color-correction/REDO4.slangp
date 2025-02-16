@@ -1,0 +1,139 @@
+shaders = "10"
+
+# This LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
+# Input is TV-gamma-space RGB; output is linearRGB.
+# From here forward *ALL* framebuffers need to be float. Otherwise dark blues will go fucky.
+shader0 = shaders/trilinearLUT-gamma.slang
+scale_type0 = source
+scale0 = "1.000000"
+filter_linear0 = false
+float_framebuffer0 = true
+wrap_mode0 = "clamp_to_edge"
+alias0 = XbrSource
+
+# Perform Super-XBR upscaling.
+# This can be replaced with upscaling of your choice.
+# You can use XBR/ScaleFX/nnedi3/etc. for smooth edges, or bilinear/lanzcos/jinc/etc. for something close to original pixel, or even nearest neighbor if you want.
+# Just make sure the scanline pass is getting input that's final x resolution and 10x original y resolution.
+
+# Super-XBR
+shader1 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass0.slang"
+filter_linear1 = false
+wrap_mode1 = clamp_to_edge
+float_framebuffer1 =  "true"
+scale_type1 = "source"
+scale1 = "1.000000"
+
+shader2 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass1.slang"
+filter_linear2 = false
+wrap_mode2 = clamp_to_edge
+float_framebuffer2 =  "true"
+scale_type2 = "source"
+scale2 = "2.000000"
+
+shader3 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass2.slang"
+filter_linear3 = false
+wrap_mode3 = clamp_to_edge
+float_framebuffer3 =  "true"
+scale_type3 = "source"
+scale3 = "1.000000"
+
+# Scale to final x resolution and 10x original y resolution.
+# X is scaled to (eventually) achieve 4:3 aspect ratio.
+# If full height of 16:9 screen is used, X should be 75% of viewport.
+# Y needs to be 10x original for the scanline filter to work properly
+# Earlier Super-XBR steps did 2x, so need 5x more Y scale
+shader4 = "../edge-smoothing/xbr/shaders/super-xbr/custom-jinc2-sharper.slang"
+filter_linear4 = false
+wrap_mode4 = clamp_to_edge
+float_framebuffer4 =  "true"
+scale_type_x4 = "viewport"
+scale_x4 = "0.750000"
+scale_type_y4 = "source"
+scale_y4 = "5.000000"
+
+# Apply scanlines
+shader5 = "shaders/scanline-rework-erfvf.slang"
+filter_linear5 = "false"
+wrap_mode5 = "clamp_to_edge"
+mipmap_input5 = "false"
+float_framebuffer5 = "true"
+scale_type5 = "source"
+scale5 = "1.000000"
+
+# Downscale Y to fit viewport, achieving 4:3 aspect ratio.
+shader6 =  "../interpolation/shaders/spline36-y.slang"
+filter_linear6 = "true"
+wrap_mode6 = "clamp_to_border"
+float_framebuffer6 = "true"
+scale_type_x6 = "source"
+scale_x6 = "1.000000"
+scale_type_y6 = "viewport"
+scale_y6 = "1.000000"
+
+# Apply aperature grille effect
+shader7 =   "shaders/aapg-rework2.slang"
+filter_linear7 =   "false"
+wrap_mode7 =   "clamp_to_edge"
+mipmap_input7 =   "false"
+float_framebuffer7 =   "true"
+scale_type7 =   "source"
+scale7 =   "1.000000"
+alias7 = NoBlurSource
+
+# Letterbox the result
+# This can be replaced with a "fancy borders" shader
+shader8 = shaders/letterbox.slang
+scale_type8 = viewport
+scale8 = "1.000000"
+filter_linear8 = "false"
+float_framebuffer8 = "true"
+
+# Back to sRGB gamma space
+shader9 = shaders/delinearizeSRGB.slang
+scale_type9 = source
+scale9 = "1.000000"
+filter_linear9 = "false"
+
+
+MODE = "1.000000"
+JINC2_SINC = "0.920000"
+JINC2_WINDOW_SINC = "0.450000"
+JINC2_AR_STRENGTH = "0.200000"
+
+textures = "SamplerLUT"
+#### Japan ####
+
+# Used in Sony Trinitron ~1993 - ~1995
+#SamplerLUT = shaders/CXA1464AS_default.png
+
+# Used in Sony Trinitron ~1996
+#SamplerLUT = shaders/CXA1870S_JP_default.png
+
+# probably used in Sony Trinitron probably around 1997
+# (probably similar to CXA2061S, which was definitely used in Trinitron ~1997 - ~1999, but its data sheet is lacking info needed for LUT creation)
+#SamplerLUT = shaders/CXA2060BS_JP_default.png
+
+# Used in Sony Trinitron ~1997
+SamplerLUT = shaders/CXA2025AS_JP_default.png
+
+#### US ####
+
+# Used in Sony Trinitron ~1993 - ~1995
+#SamplerLUT = shaders/CXA1465AS_default.png
+
+# Used in Sony Trinitron ~1996
+#SamplerLUT = shaders/CXA1870S_US_default.png
+
+# probably used in Sony Trinitron probably around 1997
+# (probably similar to CXA2061S, which was definitely used in Trinitron ~1997 - ~1999, but its data sheet is lacking info needed for LUT creation)
+#SamplerLUT = shaders/CXA2060BS_US_default.png
+
+# Used in Sony Trinitron ~1997
+# SamplerLUT = shaders/CXA2025AS_US_default.png
+
+#### Europe ####
+# (PAL/EBU had no color correction, so this LUT just does the gamma and gamut conversion for phosphors.)
+#SamplerLUT = shaders/EBU_default.png
+
+SamplerLUT_linear = false
