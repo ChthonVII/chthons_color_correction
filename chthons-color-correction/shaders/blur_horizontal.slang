@@ -1,5 +1,9 @@
 #version 450
 
+/*
+Copied from crtbeans
+*/
+
 layout(set = 0, binding = 0, std140) uniform UBO {
     mat4 MVP;
 };
@@ -11,7 +15,6 @@ layout(push_constant) uniform Push {
 
 #pragma format R16G16B16A16_SFLOAT
 
-//#include "parameters.inc.slang"
 #pragma parameter GlowSigma "Glow width (proportion of screen height)" 0.02 0.01 0.05 0.01
 
 #pragma stage vertex

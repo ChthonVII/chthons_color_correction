@@ -1,12 +1,10 @@
-#version 450
-
 /*
    Gamma function specified by the IEC61966-2-1 specification (sRGB).
-   Converts gamma-space RGB to linear RGB.
+   Converts linear RGB to gamma-space RGB.
    This is the correct function to use for a modern sRGB computer monitor,
    definitely more accurate than just using a pure power function.
-   
-   Copyright (C) 2025 ChthonVII
+
+   Copyright (C) 2023 ChthonVII
 
    This program is free software; you can redistribute it and/or
    modify it under the terms of the GNU General Public License
@@ -24,39 +22,12 @@
 
 */
 
-layout(push_constant) uniform Push
-{
-    vec4 SourceSize;
-    vec4 OriginalSize;
-    vec4 OutputSize;
-    uint FrameCount;
-} params;
+#include "saturate.inc"
 
-layout(std140, set = 0, binding = 0) uniform UBO
-{
-    mat4 MVP;
-} global;
-
-#pragma stage vertex
-layout(location = 0) in vec4 Position;
-layout(location = 1) in vec2 TexCoord;
-layout(location = 0) out vec2 vTexCoord;
-
-void main()
-{
-   gl_Position = global.MVP * Position;
-   vTexCoord = TexCoord;
-}
-
-#pragma stage fragment
-layout(location = 0) in vec2 vTexCoord;
-layout(location = 0) out vec4 FragColor;
-layout(set = 0, binding = 2) uniform sampler2D Source;
-
-#include "sRGBtoLinear.inc"
-
-void main()
-{
-    vec3 colorin = texture(Source, vTexCoord).rgb;
-    FragColor = vec4(sRGBtoLinear(colorin), 1.0);
+vec3 linearTosRGB(vec3 colorin){
+    bvec3 cutoff = lessThan(colorin.rgb, vec3(0.0031308));
+    vec3 higher = vec3(1.055) * pow(colorin.rgb, vec3(1.0/2.4)) - vec3(0.055);
+    vec3 lower = colorin.rgb * vec3(12.92);
+    vec3 colorout = saturate(mix(higher, lower, cutoff));
+    return colorout;
 }
