@@ -200,17 +200,7 @@ JINC2_AR_STRENGTH = "0.200000"
 
 textures = "SamplerLUT"
 SamplerLUT_linear = false
-SamplerLUT = luts/type3test.png
 
-crtMatrixRR = "1.2927794566"
-crtMatrixRG = "-0.1768932081"
-crtMatrixRB = "-0.1158862486"
-crtMatrixGR = "0.0051118754"
-crtMatrixGG = "0.9589445588"
-crtMatrixGB = "0.0359435658"
-crtMatrixBR = "-0.0434306425"
-crtMatrixBG = "0.0368778483"
-crtMatrixBB = "1.0065527942"
-crtLowClamp = "0.0"
-crtHighClampEnable = "1.0"
-crtHighClamp = "1.0"
+##################################################################################
+# USE GAMUTTHINGY'S --retroarchtextoutputfile PARAMETER AND PASTE THE CONTENT HERE
+##################################################################################

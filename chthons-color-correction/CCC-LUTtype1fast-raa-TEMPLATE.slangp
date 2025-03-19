@@ -189,4 +189,7 @@ filter_linear19 = "false"
 
 textures = "SamplerLUT"
 SamplerLUT_linear = false
-SamplerLUT = luts/newtest11.png
+
+##################################################################################
+# USE GAMUTTHINGY'S --retroarchtextoutputfile PARAMETER AND PASTE THE CONTENT HERE
+##################################################################################

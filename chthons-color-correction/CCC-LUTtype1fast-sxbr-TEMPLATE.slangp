@@ -200,4 +200,7 @@ JINC2_AR_STRENGTH = "0.200000"
 
 textures = "SamplerLUT"
 SamplerLUT_linear = false
-SamplerLUT = luts/newtest11.png
+
+##################################################################################
+# USE GAMUTTHINGY'S --retroarchtextoutputfile PARAMETER AND PASTE THE CONTENT HERE
+##################################################################################
