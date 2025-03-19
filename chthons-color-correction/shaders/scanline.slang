@@ -43,7 +43,7 @@ layout(push_constant) uniform Push
 #pragma parameter SCANLINE_THETA_NORM "Scanline Theta Norm" 0.70 0.10 3.50 0.05
 #pragma parameter SCANLINE_STRENGTH "Scanline Effect Strength" 1.0 0.0 1.0 0.01
 #pragma parameter SCANLINES_CUTOFF "Disable Scanlines for Y Resolution Above" 300.0 0.0 1000.0 1.0
-#pragma parameter SCANLINE_WHITE_LVL "Scanline White Level" 1.0 0.0 1.0 0.01
+#pragma parameter SCANLINE_WHITE_LVL "Scanline White Level" 1.0 0.0 1.0 0.001
 
 #define SCANLINE_THETA params.SCANLINE_THETA
 #define SCANLINE_THETA_NORM params.SCANLINE_THETA_NORM
