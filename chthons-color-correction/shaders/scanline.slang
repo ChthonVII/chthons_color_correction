@@ -34,6 +34,7 @@ layout(push_constant) uniform Push
     float SCANLINE_THETA_NORM;
     float SCANLINE_STRENGTH;
     float SCANLINES_CUTOFF;
+    float SCANLINE_WHITE_LVL;
 } params;
 
 #pragma parameter SCANLINE_BREAK "*** SCANLINE SETTINGS ***" 0.0 0.0 0.0 0.0
@@ -42,11 +43,13 @@ layout(push_constant) uniform Push
 #pragma parameter SCANLINE_THETA_NORM "Scanline Theta Norm" 0.70 0.10 3.50 0.05
 #pragma parameter SCANLINE_STRENGTH "Scanline Effect Strength" 1.0 0.0 1.0 0.01
 #pragma parameter SCANLINES_CUTOFF "Disable Scanlines for Y Resolution Above" 300.0 0.0 1000.0 1.0
+#pragma parameter SCANLINE_WHITE_LVL "Scanline White Level" 1.0 0.0 1.0 0.01
 
 #define SCANLINE_THETA params.SCANLINE_THETA
 #define SCANLINE_THETA_NORM params.SCANLINE_THETA_NORM
 #define SCANLINE_STRENGTH params.SCANLINE_STRENGTH
 #define SCANLINES_CUTOFF params.SCANLINES_CUTOFF
+#define SCANLINE_WHITE_LVL params.SCANLINE_WHITE_LVL
 
 layout(std140, set = 0, binding = 0) uniform UBO
 {
@@ -231,9 +234,10 @@ float reallocatecolors(float colors[10], int cycleindex){
 
 void main()
 {
+    vec3 whitelvl = vec3(SCANLINE_WHITE_LVL);
     vec3 finalcolor;
     if (false && params.OriginalSize.y > SCANLINES_CUTOFF){
-      finalcolor = texture(Source, vTexCoord).xyz;
+      finalcolor = whitelvl * texture(Source, vTexCoord).xyz;
     }
     else {
       // Figure out which position this pixel has within its group of 10 pixels
@@ -242,16 +246,16 @@ void main()
 
       // Sample
       // At 1x scale, we shouldn't need any "snap to center" business.
-      vec3 pixm4 = texture(Source, vTexCoord + vec2(0.0, (0.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixm3 = texture(Source, vTexCoord + vec2(0.0, (1.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixm2 = texture(Source, vTexCoord + vec2(0.0, (2.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixm1 = texture(Source, vTexCoord + vec2(0.0, (3.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixm0 = texture(Source, vTexCoord + vec2(0.0, (4.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixp0 = texture(Source, vTexCoord + vec2(0.0, (5.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixp1 = texture(Source, vTexCoord + vec2(0.0, (6.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixp2 = texture(Source, vTexCoord + vec2(0.0, (7.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixp3 = texture(Source, vTexCoord + vec2(0.0, (8.0 - cycleindex) * params.OutputSize.w)).xyz;
-      vec3 pixp4 = texture(Source, vTexCoord + vec2(0.0, (9.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixm4 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (0.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixm3 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (1.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixm2 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (2.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixm1 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (3.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixm0 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (4.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixp0 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (5.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixp1 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (6.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixp2 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (7.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixp3 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (8.0 - cycleindex) * params.OutputSize.w)).xyz;
+      vec3 pixp4 = whitelvl * texture(Source, vTexCoord + vec2(0.0, (9.0 - cycleindex) * params.OutputSize.w)).xyz;
 
       // Collect all the red/green/blue values together into arrays of 10.
       // b/c there is no vec10 :(
