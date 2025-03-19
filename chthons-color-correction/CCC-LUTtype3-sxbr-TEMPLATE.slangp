@@ -1,6 +1,6 @@
 shaders = "21"
 
-# This LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
+# This shader+LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
 # Input is TV-gamma-space RGB; output is linearRGB.
 # From here forward *ALL* framebuffers need to be float. Otherwise dark blues will go fucky.
 shader0 = shaders/trilinearLUT-type3.slang

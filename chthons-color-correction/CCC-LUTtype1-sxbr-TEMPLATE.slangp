@@ -1,9 +1,9 @@
 shaders = "21"
 
-# This LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
+# This shader+LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
 # Input is TV-gamma-space RGB; output is linearRGB.
 # From here forward *ALL* framebuffers need to be float. Otherwise dark blues will go fucky.
-shader0 = shaders/trilinearLUT-type2.slang
+shader0 = shaders/trilinearLUT-type1.slang
 scale_type0 = source
 scale0 = "1.000000"
 filter_linear0 = false
@@ -200,8 +200,4 @@ JINC2_AR_STRENGTH = "0.200000"
 
 textures = "SamplerLUT"
 SamplerLUT_linear = false
-SamplerLUT = luts/type2test.png
-
-crtLowClamp = "-0.1"
-crtHighClampEnable = "1.0"
-crtHighClamp = "1.1"
+SamplerLUT = luts/newtest11.png
