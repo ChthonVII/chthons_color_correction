@@ -25,6 +25,11 @@
 
 vec3 crtMatrixAndKnobs(vec3 colorin){
 
+    // crush black pedestal
+    vec3 crushed = (colorin - vec3(global.crtBlackCrushAmount)) / vec3(1.0 - global.crtBlackCrushAmount);
+    crushed = max(crushed, vec3(0.0));
+    colorin = mix(colorin, crushed, global.crtBlackCrush);
+
     // flip matrix b/c slang is column-major
     mat3 crtMatrix = mat3(
         global.crtMatrixRR, global.crtMatrixGR, global.crtMatrixBR,
