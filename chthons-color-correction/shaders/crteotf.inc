@@ -34,6 +34,10 @@ vec3 linearizeBT1886appx1(vec3 colorin){
     // add B
     colorin = colorin + vec3(global.crtConstantB);
 
+    // if super blacks are enabled, clamp at zero
+    vec3 clampedin = max(colorin, vec3(0.0));
+    colorin = mix(colorin, clampedin, vec3(global.crtSuperBlackEnable));
+
     // if negative, flip sign
     bvec3 flipsign = lessThan(colorin.rgb, vec3(0.0));
     vec3 flipped = colorin * vec3(-1.0);
@@ -50,8 +54,9 @@ vec3 linearizeBT1886appx1(vec3 colorin){
     outcolor = mix(outcolor, flipout, flipsign);
 
     // renormalize
-    outcolor = outcolor - vec3(global.crtBlackLevel);
-    outcolor = outcolor / vec3(global.crtWhiteLevel - global.crtBlackLevel);
+    vec3 bottom = (global.crtSuperBlackEnable == 1.0) ? vec3(0.0) : vec3(global.crtBlackLevel);
+    outcolor = outcolor - bottom;
+    outcolor = outcolor / vec3(global.crtWhiteLevel - bottom);
 
     // if input was in 0-1 range, clamp to correct floating point errors
     vec3 lowclamp = max(outcolor, vec3(0.0));

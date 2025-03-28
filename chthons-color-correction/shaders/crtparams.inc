@@ -21,6 +21,7 @@ layout(std140, set = 0, binding = 0) uniform UBO
     float crtHighClamp;
     float crtBlackCrush;
     float crtBlackCrushAmount;
+    float crtSuperBlackEnable;
 } global;
 
 // Black and white levels are in units of 100x cd/m^2. E.g., 1.71 means 171 cd/m^2
@@ -55,6 +56,10 @@ layout(std140, set = 0, binding = 0) uniform UBO
 // Black pedestal crushing
 #pragma parameter crtBlackCrush "CRT Black Pedestal Crush (requires LUT recomputation)" 0.0 0.0 1.0 1.0
 #pragma parameter crtBlackCrushAmount "CRT Black Pedestal Crush Amount (ditto)" 0.075 0.0 1.0 0.001
+// Super blacks can go with pedestal
+#pragma parameter crtSuperBlackEnable "CRT Show Super Blacks (requires LUT recomputation)" 0.0 0.0 1.0 1.0
+
+
 
 // CRT clamping
 // Low is required to match gamutthingy's behavior (which clamps low b/c the Jzazbz PQ function can't handle certain negatives)
