@@ -3,7 +3,7 @@ shaders = "21"
 # This shader+LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
 # Input is TV-gamma-space RGB; output is linearRGB.
 # From here forward *ALL* framebuffers need to be float. Otherwise dark blues will go fucky.
-shader0 = shaders/trilinearLUT-type1.slang
+shader0 = shaders/trilinearLUT-type3.slang
 scale_type0 = source
 scale0 = "1.000000"
 filter_linear0 = false
@@ -201,13 +201,16 @@ JINC2_AR_STRENGTH = "0.200000"
 textures = "SamplerLUT"
 SamplerLUT_linear = false
 
+##################################################################################
+# USE GAMUTTHINGY'S --retroarchtextoutputfile PARAMETER AND PASTE THE CONTENT HERE
+##################################################################################
 # Paste this at the bottom of a template file of Chthon's Color Correction shaders.
-# Use a LUTtype1 or LUTtype1fast template.
-# Paste japan_trinitron_01.png into the "luts" subdirectory of Chthon's Color Correction shaders.
-# LUT generation command: gamutthingy --lutgen true --lutmode normal -o japan_trinitron_01.png -s P22_trinitron_mixandmatch --sw 9300K8mpcd -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod CXA2060BS_JP --crtyuvconst 3digit --retroarchtextoutputfile japan_trinitron_01.txt
+# Use a LUTtype3 template.
+# Paste japan_trinitron_03.png into the "luts" subdirectory of Chthon's Color Correction shaders.
+# LUT generation command: gamutthingy -s P22_trinitron --sw 9300K8mpcd --crtemu front --crtdemod CXA1464AS --lutgen true -o japan_trinitron_03.png --crtclamplow 0.0 --crtclamphigh 1.0 --chk -2.0 --retroarchtextoutputfile japan_trinitron_03.txt --lutmode postgamma
 
 
-SamplerLUT = "luts/japan_trinitron_01.png"
+SamplerLUT = "luts/japan_trinitron_03.png"
 
 crtBlackLevel = "0.0001"
 crtWhiteLevel = "1.71"
@@ -216,21 +219,19 @@ crtConstantK = "1.562827624914115"
 crtConstantS = "1.464591181894373"
 crtGammaKnob = "1"
 
-# For a LUTtype1fast template, you may omit everything below this point.
-
-crtMatrixRR = "1.29035834025603"
-crtMatrixRG = "-0.1862128635604091"
-crtMatrixRB = "-0.1041454766956209"
-crtMatrixGR = "0.01339988905600664"
-crtMatrixGG = "0.9814911231433754"
-crtMatrixGB = "0.005108987800618033"
-crtMatrixBR = "0"
-crtMatrixBG = "0"
-crtMatrixBB = "1"
+crtMatrixRR = "1.292779456632584"
+crtMatrixRG = "-0.1768932080621953"
+crtMatrixRB = "-0.1158862485703885"
+crtMatrixGR = "0.005111875412516398"
+crtMatrixGG = "0.958944558814663"
+crtMatrixGB = "0.0359435657728206"
+crtMatrixBR = "-0.04343064250628594"
+crtMatrixBG = "0.03687784834661992"
+crtMatrixBB = "1.006552794159666"
 
 crtBlackCrush = "0"
 crtBlackCrushAmount = "0.075"
 
-crtLowClamp = "-0.1"
+crtLowClamp = "0"
 crtHighClampEnable = "1.0"
-crtHighClamp = "1.1"
+crtHighClamp = "1"

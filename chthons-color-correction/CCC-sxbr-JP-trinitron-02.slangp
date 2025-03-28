@@ -201,13 +201,17 @@ JINC2_AR_STRENGTH = "0.200000"
 textures = "SamplerLUT"
 SamplerLUT_linear = false
 
+##################################################################################
+# USE GAMUTTHINGY'S --retroarchtextoutputfile PARAMETER AND PASTE THE CONTENT HERE
+##################################################################################
+
 # Paste this at the bottom of a template file of Chthon's Color Correction shaders.
 # Use a LUTtype1 or LUTtype1fast template.
-# Paste japan_trinitron_01.png into the "luts" subdirectory of Chthon's Color Correction shaders.
-# LUT generation command: gamutthingy --lutgen true --lutmode normal -o japan_trinitron_01.png -s P22_trinitron_mixandmatch --sw 9300K8mpcd -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod CXA2060BS_JP --crtyuvconst 3digit --retroarchtextoutputfile japan_trinitron_01.txt
+# Paste japan_trinitron_02.png into the "luts" subdirectory of Chthon's Color Correction shaders.
+# LUT generation command: gamutthingy --lutgen true --lutmode normal -o japan_trinitron_02.png -s P22_trinitron_mixandmatch --sw 9300K8mpcd -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod CXA2060BS_JP --crtyuvconst 3digit --retroarchtextoutputfile japan_trinitron_02.txt --crtclamphighenable false
 
 
-SamplerLUT = "luts/japan_trinitron_01.png"
+SamplerLUT = "luts/japan_trinitron_02.png"
 
 crtBlackLevel = "0.0001"
 crtWhiteLevel = "1.71"
@@ -231,6 +235,7 @@ crtMatrixBB = "1"
 crtBlackCrush = "0"
 crtBlackCrushAmount = "0.075"
 
-crtLowClamp = "-0.1"
-crtHighClampEnable = "1.0"
+# crtLowClamp is set at zero light emission.
+crtLowClamp = "-0.03522012031612576"
+crtHighClampEnable = "0.0"
 crtHighClamp = "1.1"
