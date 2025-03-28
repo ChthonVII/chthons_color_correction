@@ -22,6 +22,7 @@ layout(std140, set = 0, binding = 0) uniform UBO
     float crtBlackCrush;
     float crtBlackCrushAmount;
     float crtSuperBlackEnable;
+    float crtLUT4scale;
 } global;
 
 // Black and white levels are in units of 100x cd/m^2. E.g., 1.71 means 171 cd/m^2
@@ -67,4 +68,5 @@ layout(std140, set = 0, binding = 0) uniform UBO
 #pragma parameter crtHighClampEnable "CRT Matrix Output Enable High Clamp (ditto)" 1.0 0.0 1.0 1.0
 #pragma parameter crtHighClamp "CRT Matrix Output High Clamp (requires LUT recomputation)" 1.1 1.0 10.0 0.01
 
-
+// Multipler for LUT index
+#pragma parameter crtLUT4scale "CRT LUTtype4 Scale Factor (requires LUT recomputation)" 1.0 0.0 1.0 0.0001
