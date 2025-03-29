@@ -78,8 +78,16 @@ void main()
 	vec3 ceils = ceil(indexColor.rgb  * (vec3(LUT_Size.y - 1.0)));
 	
 	// how close are we to the ceiling on a scale of 0-1?
-	// (This should be OK b/c we're in linear light, so we can just drop out the scaling factor)
-	vec3 weights = saturate((temp - floors) / (ceils - floors));
+	// unscale and potentially renormalize
+	vec3 unscaledfloors = (floors / vec3(LUT_Size.y - 1.0)) / vec3(global.crtLUT4scale);
+	vec3 unscaledceils = (ceils / vec3(LUT_Size.y - 1.0)) / vec3(global.crtLUT4scale);
+	vec3 unsuperblacktemp = ((imgColor * vec3(global.crtWhiteLevel)) - vec3(global.crtBlackLevel)) / vec3(global.crtWhiteLevel - global.crtBlackLevel);
+	vec3 unsuperblackfloors = ((unscaledfloors * vec3(global.crtWhiteLevel)) - vec3(global.crtBlackLevel)) / vec3(global.crtWhiteLevel - global.crtBlackLevel);
+	vec3 unsuperblackceils = ((unscaledceils * vec3(global.crtWhiteLevel)) - vec3(global.crtBlackLevel)) / vec3(global.crtWhiteLevel - global.crtBlackLevel);
+	vec3 interpolatetemp = mix(imgColor, unsuperblacktemp, vec3(global.crtLUT4renorm));
+	vec3 interpolatefloors = mix(unscaledfloors, unsuperblackfloors, vec3(global.crtLUT4renorm));
+	vec3 interpolateceils = mix(unscaledceils, unsuperblackceils, vec3(global.crtLUT4renorm));
+	vec3 weights = saturate((interpolatetemp - interpolatefloors) / (interpolateceils - interpolatefloors));
 	
 	// retroarch can't correctly sample a 1.0 coordinate
 	// so we are going to add a just-under-half-step offset to red and green, then increase their divisors by 1
