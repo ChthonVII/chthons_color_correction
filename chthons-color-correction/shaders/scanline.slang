@@ -236,7 +236,7 @@ void main()
 {
     vec3 whitelvl = vec3(SCANLINE_WHITE_LVL);
     vec3 finalcolor;
-    if (false && params.OriginalSize.y > SCANLINES_CUTOFF){
+    if (params.OriginalSize.y > SCANLINES_CUTOFF){
       finalcolor = whitelvl * texture(Source, vTexCoord).xyz;
     }
     else {
