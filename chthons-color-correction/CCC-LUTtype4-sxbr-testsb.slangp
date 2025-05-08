@@ -3,7 +3,7 @@ shaders = "21"
 # This shader+LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
 # Input is TV-gamma-space RGB; output is linearRGB.
 # From here forward *ALL* framebuffers need to be float. Otherwise dark blues will go fucky.
-shader0 = shaders/trilinearLUT-type1fast.slang
+shader0 = shaders/trilinearLUT-type4.slang
 scale_type0 = source
 scale0 = "1.000000"
 filter_linear0 = false
@@ -17,21 +17,21 @@ alias0 = XbrSource
 # Just make sure the scanline pass is getting input that's final x resolution and 10x original y resolution.
 
 # Super-XBR
-shader1 = "shaders/old-super-xbr/super-xbr-pass0.slang"
+shader1 = "/shaders/old-super-xbr/super-xbr-pass0.slang"
 filter_linear1 = false
 wrap_mode1 = clamp_to_edge
 float_framebuffer1 =  "true"
 scale_type1 = "source"
 scale1 = "1.000000"
 
-shader2 = "shaders/old-super-xbr/super-xbr-pass1.slang"
+shader2 = "/shaders/old-super-xbr/super-xbr-pass1.slang"
 filter_linear2 = false
 wrap_mode2 = clamp_to_edge
 float_framebuffer2 =  "true"
 scale_type2 = "source"
 scale2 = "2.000000"
 
-shader3 = "shaders/old-super-xbr/super-xbr-pass2.slang"
+shader3 = "/shaders/old-super-xbr/super-xbr-pass2.slang"
 filter_linear3 = false
 wrap_mode3 = clamp_to_edge
 float_framebuffer3 =  "true"
@@ -43,7 +43,7 @@ scale3 = "1.000000"
 # If full height of 16:9 screen is used, X should be 75% of viewport.
 # Y needs to be 10x original for the scanline filter to work properly
 # Earlier Super-XBR steps did 2x, so need 5x more Y scale
-shader4 = "shaders/old-super-xbr/custom-jinc2-sharper.slang"
+shader4 = "/shaders/old-super-xbr/custom-jinc2-sharper.slang"
 filter_linear4 = false
 wrap_mode4 = clamp_to_edge
 float_framebuffer4 =  "true"
@@ -204,3 +204,41 @@ SamplerLUT_linear = false
 ##################################################################################
 # USE GAMUTTHINGY'S --retroarchtextoutputfile PARAMETER AND PASTE THE CONTENT HERE
 ##################################################################################
+
+# Paste this at the bottom of a template file of Chthon's Color Correction shaders.
+# Use a LUTtype4 template.
+# Paste ultest3.png into the "luts" subdirectory of Chthon's Color Correction shaders.
+# LUT generation command: gamutthingy --lutgen true --lutmode postgammaunlimited -o ultest3.png -s P22_trinitron_mixandmatch --sw 9300K8mpcd -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod CXA2060BS_JP --crtyuvconst 3digit --crtclamphighenable true --retroarchtextoutputfile ultest3.txt
+
+
+SamplerLUT = "luts/ultest3.png"
+
+crtBlackLevel = "0.0001"
+crtWhiteLevel = "1.71"
+crtConstantB = "0.03522012031612576"
+crtConstantK = "1.562827624914115"
+crtConstantS = "1.464591181894373"
+crtGammaKnob = "1"
+
+crtLUT4scale = "0.78125"
+
+crtLUT4renorm = "1.0"
+crtMatrixRR = "1.29035834025603"
+crtMatrixRG = "-0.1862128635604091"
+crtMatrixRB = "-0.1041454766956209"
+crtMatrixGR = "0.01339988905600664"
+crtMatrixGG = "0.9814911231433754"
+crtMatrixGB = "0.005108987800618033"
+crtMatrixBR = "0"
+crtMatrixBG = "0"
+crtMatrixBB = "1"
+
+crtBlackCrush = "0.0"
+crtBlackCrushAmount = "0.075"
+# crtSuperBlackEnable is forced to true for LUTtype4.
+crtSuperBlackEnable = "1.0"
+
+# crtLowClamp is set at zero light emission.
+crtLowClamp = "-0.03522012031612576"
+crtHighClampEnable = "1.0"
+crtHighClamp = "1.1"

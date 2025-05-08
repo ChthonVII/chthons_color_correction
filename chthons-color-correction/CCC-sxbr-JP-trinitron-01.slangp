@@ -17,21 +17,21 @@ alias0 = XbrSource
 # Just make sure the scanline pass is getting input that's final x resolution and 10x original y resolution.
 
 # Super-XBR
-shader1 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass0.slang"
+shader1 = "shaders/old-super-xbr/super-xbr-pass0.slang"
 filter_linear1 = false
 wrap_mode1 = clamp_to_edge
 float_framebuffer1 =  "true"
 scale_type1 = "source"
 scale1 = "1.000000"
 
-shader2 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass1.slang"
+shader2 = "shaders/old-super-xbr/super-xbr-pass1.slang"
 filter_linear2 = false
 wrap_mode2 = clamp_to_edge
 float_framebuffer2 =  "true"
 scale_type2 = "source"
 scale2 = "2.000000"
 
-shader3 = "../edge-smoothing/xbr/shaders/super-xbr/super-xbr-pass2.slang"
+shader3 = "shaders/old-super-xbr/super-xbr-pass2.slang"
 filter_linear3 = false
 wrap_mode3 = clamp_to_edge
 float_framebuffer3 =  "true"
@@ -43,7 +43,7 @@ scale3 = "1.000000"
 # If full height of 16:9 screen is used, X should be 75% of viewport.
 # Y needs to be 10x original for the scanline filter to work properly
 # Earlier Super-XBR steps did 2x, so need 5x more Y scale
-shader4 = "../edge-smoothing/xbr/shaders/super-xbr/custom-jinc2-sharper.slang"
+shader4 = "shaders/old-super-xbr/custom-jinc2-sharper.slang"
 filter_linear4 = false
 wrap_mode4 = clamp_to_edge
 float_framebuffer4 =  "true"

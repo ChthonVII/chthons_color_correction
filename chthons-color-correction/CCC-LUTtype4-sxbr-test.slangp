@@ -3,7 +3,7 @@ shaders = "21"
 # This shader+LUT encompasses color correction circuit emulation > bt1886appdx1 EotF function > gamut conversion w/ chromatic adapation, state-of-the-art gamut compression
 # Input is TV-gamma-space RGB; output is linearRGB.
 # From here forward *ALL* framebuffers need to be float. Otherwise dark blues will go fucky.
-shader0 = shaders/trilinearLUT-type1fast.slang
+shader0 = shaders/trilinearLUT-type4.slang
 scale_type0 = source
 scale0 = "1.000000"
 filter_linear0 = false
@@ -204,3 +204,39 @@ SamplerLUT_linear = false
 ##################################################################################
 # USE GAMUTTHINGY'S --retroarchtextoutputfile PARAMETER AND PASTE THE CONTENT HERE
 ##################################################################################
+
+# Paste this at the bottom of a template file of Chthon's Color Correction shaders.
+# Use a LUTtype4 template.
+# Paste ultest4.png into the "luts" subdirectory of Chthon's Color Correction shaders.
+# LUT generation command: gamutthingy --lutgen true --lutmode postgammaunlimited -o ultest4.png -s P22_trinitron_mixandmatch --sw 9300K8mpcd -d srgb_spec --dw D65 --sc true --crtemu front --crtdemod CXA2060BS_JP --crtyuvconst 3digit --crtclamphighenable true --retroarchtextoutputfile ultest4.txt --crtsuperblacks true --crtblack 0.002
+
+
+SamplerLUT = "luts/ultest4.png"
+
+crtBlackLevel = "0.002"
+crtWhiteLevel = "1.71"
+crtConstantB = "0.1032367172184046"
+crtConstantK = "1.324516800483618"
+crtConstantS = "1.372366050214779"
+crtGammaKnob = "1"
+
+crtLUT4scale = "0.796875"
+crtLUT4renorm = "0.0"
+
+crtMatrixRR = "1.29035834025603"
+crtMatrixRG = "-0.1862128635604091"
+crtMatrixRB = "-0.1041454766956209"
+crtMatrixGR = "0.01339988905600664"
+crtMatrixGG = "0.9814911231433754"
+crtMatrixGB = "0.005108987800618033"
+crtMatrixBR = "0"
+crtMatrixBG = "0"
+crtMatrixBB = "1"
+
+crtBlackCrush = "0.0"
+crtBlackCrushAmount = "0.075"
+crtSuperBlackEnable = "1.0"
+
+crtLowClamp = "-0.1"
+crtHighClampEnable = "1.0"
+crtHighClamp = "1.1"
